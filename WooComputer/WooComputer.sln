@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WooComputer", "WooComputer\WooComputer.csproj", "{A6B34355-65AE-4340-BD59-A55775B3B19A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{723FDB67-9E9E-4428-B9F4-151EF475A3A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A6B34355-65AE-4340-BD59-A55775B3B19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6B34355-65AE-4340-BD59-A55775B3B19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6B34355-65AE-4340-BD59-A55775B3B19A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{723FDB67-9E9E-4428-B9F4-151EF475A3A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{723FDB67-9E9E-4428-B9F4-151EF475A3A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{723FDB67-9E9E-4428-B9F4-151EF475A3A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{723FDB67-9E9E-4428-B9F4-151EF475A3A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -19,14 +19,9 @@ namespace WooComputer.Chips
             flipFlop = dff;
         }
         public bool GetOutput() {
-            if (Load)
-            {
-                flipFlop.Value = Input ;
-                return Input;
-            }
-            else {
-                return flipFlop.Value;
-            }
+            var output =  Gates.Mux(flipFlop.Value, Input, Load);
+            flipFlop.Value = output;
+            return output;
         }
     }
 }
