@@ -45,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chips\Bit.cs" />
+    <Compile Include="Chips\Gates.cs" />
+    <Compile Include="Chips\Ram8.cs" />
+    <Compile Include="Chips\Register.cs" />
     <Compile Include="Computer.cs" />
     <Compile Include="Chips\DFlipFlop.cs" />
     <Compile Include="Form1.cs">
