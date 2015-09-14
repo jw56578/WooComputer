@@ -9,15 +9,16 @@ namespace WooComputer
 {
     class Computer
     {
+        static Computer CurrentComputer = null;
         public static void ClockCycled() { 
         
         }
-        public Computer(ClockCycle clockCycle) { 
-        
+        public Computer(ClockCycle clockCycle) {
+            CurrentComputer = this;
         }
         public Computer():this(new ClockCycle(Computer.ClockCycled))
         { 
-        
+            
         }
     }
 }
@@ -39,6 +40,7 @@ public class ClockCycle{
     Timer timer = new Timer();
     public void Start(){
         timer.Interval = 1000;
+        timer.Start();
     }
 }
 
