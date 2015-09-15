@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace WooComputer.Chips
 {
     /// <summary>
-    /// should load be a property or a method parameter
     /// Deviating from normal way of doing things at lowest leve. This should just be hard coded to 16,32 or 64 bits because that is a hardware thing
     /// there are no loops in hardware
     /// I'll see how this works out

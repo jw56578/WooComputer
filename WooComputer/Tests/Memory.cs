@@ -80,8 +80,25 @@ namespace Tests
             TestRam(r, 5);
             TestRam(r, 6);
             TestRam(r, 7);
-    
-
         }
+        [TestMethod]
+        public void RAM8Works()
+        {
+            Ram8 r = new Ram8(16);
+            var input = new bool[]{false, false, false, false, false, false, false, false};
+            var output = r.Cycle(input, true, new bool[] { false, false, false });
+        }
+
+
+
+
+        void CompareBitArray(bool[] source, bool[] compareTo)
+        {
+            for (int i = 0; i < source.Length; i++)
+            {
+                Assert.AreEqual(source[i], compareTo[i]);
+            }
+        }
+
     }
 }

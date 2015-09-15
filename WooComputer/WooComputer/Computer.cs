@@ -25,7 +25,7 @@ namespace WooComputer
 
 
 
-/* start with ROM that will be where the instructions come from
+/* start with ROM that will be where the instructions come from, watch video on how instructions are formatted
  * Need a timer for the clock cycle 
  * Need a way to architect chips 
  * 
@@ -44,30 +44,3 @@ public class ClockCycle{
     }
 }
 
-/// <summary>
-/// should this thing implement an interface in order to be a Time Dependent Chip? like the traingle indicates?
-/// should this thing take function delegates to call when the program counter is cycled
-/// </summary>
-public class ProgramCounter
-{
-    public int InstructionLocation = 0;
-    public bool[] inputoutput ;
-    public ProgramCounter() {
-      
-    }
-    public void Next() {
-        InstructionLocation++;
-    }
-    public void Reset() {
-        InstructionLocation = 0;
-    }
-    public void Load(bool[] input)
-    {
-        inputoutput = input;
-    }
-    public bool[] GetOut() {
-        return inputoutput;
-    }
-
-
-}

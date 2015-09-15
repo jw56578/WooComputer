@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryConverter.cs" />
+    <Compile Include="Chips\ALU.cs" />
+    <Compile Include="Chips\CPU.cs" />
+    <Compile Include="Chips\Operators.cs" />
+    <Compile Include="Chips\ProgramCounter.cs" />
+    <Compile Include="Chips\Ram8.cs" />
     <Compile Include="Chips\Register8Bit.cs" />
     <Compile Include="Chips\Bit.cs" />
     <Compile Include="Chips\Gates.cs" />
