@@ -73,6 +73,8 @@ namespace WooComputer.Chips
  
         public static bool[] Mux4Way16(bool[] input1, bool[] input2,  bool[] input3,bool[] input4, bool[] sel)
         {
+            if (sel.Length < 2)
+                throw new Exception("Select address must be 2 bits.");
             var outpu1 = Gates.Mux(input1, input2, sel[1]);
             var output2 = Gates.Mux(input3, input4, sel[1]);
             var output3 = Gates.Mux(outpu1, output2, sel[0]);
@@ -81,14 +83,8 @@ namespace WooComputer.Chips
 
         public static bool[] Mux8Way16(bool[] input1, bool[] input2, bool[] input3, bool[] input4, bool[] input5, bool[] input6, bool[] input7, bool[] input8, bool[] sel)
         {
-             // First 2 selection bits
-            //Mux4Way16(a=a, b=b, c=c, d=d, sel=sel[0..1], out=mux0);
-            //Mux4Way16(a=e, b=f, c=g, d=h, sel=sel[0..1], out=mux1);
-
-            //// 3rd selection bit
-            //Mux16(a=mux0, b=mux1, sel=sel[2], out=out);
-
-
+            if (sel.Length < 3)
+                throw new Exception("Select address must be 3 bits.");
 
             var outpu1 = Gates.Mux4Way16(input1, input2,input3,input4, new bool[]{sel[1],sel[2]});
             var output2 = Gates.Mux4Way16(input5, input6, input7, input8, new bool[] { sel[1], sel[2] });

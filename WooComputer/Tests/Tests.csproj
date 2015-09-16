@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ALU.cs" />
     <Compile Include="Gates.cs" />
+    <Compile Include="Memory2.cs" />
     <Compile Include="ProgramCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Memory.cs" />

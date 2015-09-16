@@ -4,7 +4,7 @@ using WooComputer.Chips;
 namespace Tests
 {
     [TestClass]
-    public class Memory
+    public partial class Memory
     {
         [TestMethod]
         public void BitWorks()
@@ -86,17 +86,59 @@ namespace Tests
         {
             Ram8 r = new Ram8(16);
             var input = new bool[]{false, false, false, false, false, false, false, false};
-            var output = r.Cycle(input, true, new bool[] { false, false, false });
+
+
+            //no load, the value should just be the same, all false
+            var output = r.Cycle(input, false, new bool[] { false, false, false });
+            CompareBitArray(output, input);
+            output = r.Cycle(new bool[] { true, false, false, true, false, true, false, false }, false, new bool[] { false, false, false });
+            CompareBitArray(output, input);
+            output = r.Cycle(new bool[] { false, true, true, false, true, false, true, false }, false, new bool[] { false, false, false });
+            CompareBitArray(output, input);
+
+
+
+
+            //load, the value should be the input which is the same as default, all false
+            output = r.Cycle(input, false, new bool[] { false, false, false });
+            CompareBitArray(output, input);
+
+            //no load, the value should be the default, not the input
+            input = new bool[] { false, false, false, true, true, false, true, true };
+            output = r.Cycle(input, false, new bool[] { false, false, false });
+            CompareBitArray(output, new bool[] { false, false, false, false, false, false, false, false });
+
+            //load, the value should be the input
+            input = new bool[] { false, false, false, true, true, false, true, true };
+            output = r.Cycle(input, true, new bool[] { false, false, false });
+            CompareBitArray(output, new bool[] { false, false, false, true, true, false, true, true });
+
+            //load, a different address, should still be all false
+            output = r.Cycle(input, false, new bool[] { false, false, true });
+            CompareBitArray(output, new bool[] { false, false, false, false, false, false, false, false });
+
+            //put whatever in whatever address and it should be the same
+            output = r.Cycle(new bool[] { false, true, false, true, false, true, false, true }, true, new bool[] { false, false, true });
+            CompareBitArray(output, new bool[] { false, true, false, true, false, true, false, true });
+
+            output = r.Cycle(new bool[] { false, true, false, true, false, true, false, true }, true, new bool[] { false, true, true });
+            CompareBitArray(output, new bool[] { false, true, false, true, false, true, false, true });
         }
-
-
 
 
         void CompareBitArray(bool[] source, bool[] compareTo)
         {
+            CompareBitArray(source,compareTo,true);
+        }
+
+        void CompareBitArray(bool[] source, bool[] compareTo, bool equal)
+        {
             for (int i = 0; i < source.Length; i++)
             {
-                Assert.AreEqual(source[i], compareTo[i]);
+                if(equal)
+                    Assert.AreEqual(source[i], compareTo[i]);
+                else
+                    Assert.AreNotEqual(source[i], compareTo[i]);
             }
         }
 

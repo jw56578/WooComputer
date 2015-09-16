@@ -29,6 +29,13 @@ namespace WooComputer.Chips
             r7 = new Register(width);
             r8 = new Register(width);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="load"></param>
+        /// <param name="address"> 3 bits</param>
+        /// <returns></returns>
         public bool[] Cycle(bool[] input, bool load, bool[] address)
         {
 
