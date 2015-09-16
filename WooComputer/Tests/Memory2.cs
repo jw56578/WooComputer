@@ -17,7 +17,7 @@ namespace Tests
         [TestMethod]
         public void RAM64Works()
         {
-            Ram64 r = new Ram64(16);
+            Ram64 r = new Ram64(8);
             var input = new bool[] { false, false, false, false, false, false, false, false };
 
 

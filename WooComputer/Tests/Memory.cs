@@ -84,7 +84,7 @@ namespace Tests
         [TestMethod]
         public void RAM8Works()
         {
-            Ram8 r = new Ram8(16);
+            Ram8 r = new Ram8(8);
             var input = new bool[]{false, false, false, false, false, false, false, false};
 
 

@@ -486,10 +486,7 @@ namespace Tests
         }
         void CompareBitArray(bool[] source, bool[] compareTo)
         {
-            for (int i = 0; i < source.Length; i++)
-            {
-                Assert.AreEqual(source[i], compareTo[i]);
-            }
+            Functions.CompareBitArray(source, compareTo);
         }
     }
 }
