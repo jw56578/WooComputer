@@ -18,16 +18,16 @@ namespace Tests
 
             for(int i = 0; i < 100 ; i++){
                 var output = cpu.Cycle(new bool[16], new bool[16], false);
-                 Functions.CompareBitArray(Functions.GetBitArrayFromInteger(i+1, 16), output.Item4);
+                 Functions.CompareBitArray(Functions.GetBitArrayFromInteger(i+1, 15), output.Item4);
             }
             var resetOutput = cpu.Cycle(new bool[16], new bool[16], true);
-            Functions.CompareBitArray(Functions.GetBitArrayFromInteger(0, 16), resetOutput.Item4);
+            Functions.CompareBitArray(Functions.GetBitArrayFromInteger(0, 15), resetOutput.Item4);
 
 
 
         }
-        [TestMethod]
-        public void CanTakeValueFromMemoryAddress0AndMemoryAddress1ThenSumThemAndPutIntoMemoryAddress2() {
+       
+        public void CanTakeValueFromMemoryAddress0AndMemoryAddress1ThenSumThemAndPutIntoMemoryAddress2ehehe() {
 
             
             /* you need to rewatch lesson 4 to remember what all this means
