@@ -52,8 +52,11 @@
   <ItemGroup>
     <Compile Include="ALU\ALU.cs" />
     <Compile Include="ALU\IsNegativeWorks.cs" />
+    <Compile Include="Computer.cs" />
     <Compile Include="CPU\CPU2.cs" />
     <Compile Include="CPU\CPU.cs" />
+    <Compile Include="CPU\CPU3.cs" />
+    <Compile Include="CPU\Jump.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Gates.cs" />
     <Compile Include="Memory2.cs" />

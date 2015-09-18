@@ -116,14 +116,14 @@ namespace WooComputer.Chips
             // //if reset = true, then the rest of the load bits must be set to false
 
             //  var pcOutput = pc.Cycle(aRegisterOut, pcLoad, pcInc, reset);
+            //the logic is that you always increment by default and you need to account for other things
+            //reset should override everything
+            //load should override increment
             var pcInc = Gates.NAnd(true, reset);
-
-
+            pcInc = Gates.NAnd(Load3, pcInc);
+            Load3 = Gates.Mux(Load3, false, reset);
             var pcOutput = pc.Cycle(storedA, Load3, pcInc, reset);
 
-    //PC(in=storedA, load=Load3, inc=true, reset=reset, out[0..14]=pc);
-
-            //how does [0..14] translate to what wee need ??
             return new Tuple<bool[], bool, bool[], bool[]>(aluOut, writeM,
                 new bool[] { storedA[1], storedA[2], storedA[3], storedA[4], storedA[5], storedA[6], storedA[7], storedA[8], storedA[9], storedA[10], 
                 storedA[11], storedA[12], storedA[13], storedA[14],storedA[15] },
