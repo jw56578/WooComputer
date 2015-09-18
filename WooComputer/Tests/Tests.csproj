@@ -50,11 +50,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ALU.cs" />
+    <Compile Include="ALU\ALU.cs" />
+    <Compile Include="ALU\IsNegativeWorks.cs" />
+    <Compile Include="CPU\CPU2.cs" />
+    <Compile Include="CPU\CPU.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Gates.cs" />
     <Compile Include="Memory2.cs" />
     <Compile Include="Memory3.cs" />
+    <Compile Include="MainMemory.cs" />
     <Compile Include="ProgramCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Memory.cs" />

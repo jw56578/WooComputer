@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Tests
 {
     [TestClass]
-    public class ALU
+    public partial class ALU
     {
         WooComputer.Chips.ALU alu = new WooComputer.Chips.ALU(16);
         [TestMethod]
@@ -368,6 +368,103 @@ namespace Tests
                 , false
                 , true);
             Functions.CompareBitArray(output.Item1, or);
+
+        }
+ 
+        [TestMethod]
+        public void IsZeroWorks()
+        {
+            //item2
+
+            var output = alu.Cycle(
+                   Functions.GetBitArrayFromInteger(1, 16)
+                , Functions.GetBitArrayFromInteger(1, 16)
+                , false
+                , false
+                , false
+                , true
+                , true
+                , true);
+            Assert.IsTrue(output.Item2);
+
+            output = alu.Cycle(
+                   Functions.GetBitArrayFromInteger(2, 16)
+                , Functions.GetBitArrayFromInteger(2, 16)
+                , false
+                , false
+                , false
+                , true
+                , true
+                , true);
+            Assert.IsTrue(output.Item2);
+
+            output = alu.Cycle(
+                   Functions.GetBitArrayFromInteger(11, 16)
+                , Functions.GetBitArrayFromInteger(11, 16)
+                , false
+                , false
+                , false
+                , true
+                , true
+                , true);
+            Assert.IsTrue(output.Item2);
+
+            output = alu.Cycle(
+                   Functions.GetBitArrayFromInteger(12, 16)
+                , Functions.GetBitArrayFromInteger(12, 16)
+                , false
+                , false
+                , false
+                , true
+                , true
+                , true);
+            Assert.IsTrue(output.Item2);
+
+            output = alu.Cycle(
+                   Functions.GetBitArrayFromInteger(13, 16)
+                , Functions.GetBitArrayFromInteger(16, 16)
+                , false
+                , false
+                , false
+                , true
+                , true
+                , true);
+            Assert.IsFalse(output.Item2);
+
+            output = alu.Cycle(
+                   Functions.GetBitArrayFromInteger(14, 16)
+                , Functions.GetBitArrayFromInteger(166, 16)
+                , false
+                , false
+                , false
+                , true
+                , true
+                , true);
+            Assert.IsFalse(output.Item2);
+
+            output = alu.Cycle(
+                   Functions.GetBitArrayFromInteger(1555, 16)
+                , Functions.GetBitArrayFromInteger(12222, 16)
+                , false
+                , false
+                , false
+                , true
+                , true
+                , true);
+            Assert.IsFalse(output.Item2);
+
+            output = alu.Cycle(
+                   Functions.GetBitArrayFromInteger(3456, 16)
+                , Functions.GetBitArrayFromInteger(3456, 16)
+                , false
+                , false
+                , false
+                , true
+                , true
+                , true);
+            Assert.IsTrue(output.Item2);
+
+
 
         }
     }

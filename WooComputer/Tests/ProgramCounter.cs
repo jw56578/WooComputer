@@ -10,6 +10,23 @@ namespace Tests
     public class ProgramCounter
     {
         [TestMethod]
+        public void CanIncrementThenResetToZero()
+        {
+
+            WooComputer.Chips.ProgramCounter pc = new WooComputer.Chips.ProgramCounter(16);
+
+            for (int i = 0; i < 100; i++)
+            {
+                var output = pc.Cycle(new bool[16],false,true,false);
+                Functions.CompareBitArray(Functions.GetBitArrayFromInteger(i + 1, 16), output);
+            }
+            var resetOutput = pc.Cycle(new bool[16],false,false,true);
+            Functions.CompareBitArray(Functions.GetBitArrayFromInteger(0, 16), resetOutput);
+
+
+        }
+
+        [TestMethod]
         public void ResetWorks()
         {
             WooComputer.Chips.ProgramCounter pc = new WooComputer.Chips.ProgramCounter(8);

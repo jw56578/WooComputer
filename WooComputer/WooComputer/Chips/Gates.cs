@@ -47,6 +47,27 @@ namespace WooComputer.Chips
             }
             return bits.ToArray();
         }
+
+        public static bool Or8Way(bool[] input)
+        {
+            var output = Gates.Or(input[0], input[1]);
+            output = Gates.Or(output, input[2]);
+            output = Gates.Or(output, input[3]);
+            output = Gates.Or(output, input[4]);
+            output = Gates.Or(output, input[5]);
+            output = Gates.Or(output, input[6]);
+            output = Gates.Or(output, input[7]);
+            return output;
+
+        }
+        public static bool Or16Way(bool[] input)
+        {
+            var output = Gates.Or8Way(new bool[] { input[0], input[1], input[2], input[3], input[4], input[5], input[6], input[7] });
+            var outpu2 = Gates.Or8Way(new bool[] { input[8], input[9], input[10], input[11], input[12], input[13], input[14], input[15] });
+            return Gates.Or(output, outpu2);
+        }
+
+
         public static bool XOr(bool input1, bool input2) {
             var i1 = Gates.Not(input1);
             i1 = Gates.And(i1, input2);
@@ -54,6 +75,12 @@ namespace WooComputer.Chips
             i2 = Gates.And(input1, i2);
             return Gates.Or(i1, i2);
         
+        }
+        public static bool IsNegative(bool[] input){
+            // make note of this logic because it makes things understandable
+            //in order to use an if statement to say is a value true or false, you use OR with a hard coded value in the second input
+            //the result will obviously be the correct value indicating if the first input is true or false
+            return Gates.Or(input[0], false);
         }
         public static bool Mux(bool input1, bool input2, bool select){
             var i1 = Gates.And(input2, select);

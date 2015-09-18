@@ -13,6 +13,7 @@ namespace WooComputer
         static Computer CurrentComputer = null;
         ROM rom = null;
         CPU16Bit cpu;
+        Memory memory;
 
         //need to build the memory unit!!!!! where is that in the lecture
 
@@ -20,7 +21,19 @@ namespace WooComputer
         public static void ClockCycled() { 
         
             //how would you emulate the actual occurance of a cycle happening which takes the instruction from the ROM and puts that into the CPU
-            CurrentComputer.cpu.Cycle(Functions.GetBitArrayFromInteger(0, 16), Functions.GetBitArrayFromInteger(0, 16), false);
+            //need to study what the heck this thing is doing from the lecture
+            //none of the projects i cloned has the computer project done
+
+
+            //does the ROM depend on the program counter to determine which instruction to give??
+
+            var instructionAddress = 0;// this needs to come from the program counter which is in the CPU, so what is the techniqueu to get the value from the PC to the ROM
+            var instruction = CurrentComputer.rom.Cycle(0);
+
+
+
+            //var memory = CurrentComputer.memory.Cycle()
+           // CurrentComputer.cpu.Cycle(null, Functions.GetBitArrayFromInteger(0, 16), false);
 
             
         }
@@ -28,7 +41,7 @@ namespace WooComputer
             CurrentComputer = this;
             this.rom = rom;
             cpu = new CPU16Bit();
-
+            memory = new Memory(16);
             clockCycle.Start();
         }
         public Computer(ClockCycle clockCycle)

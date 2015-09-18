@@ -33,60 +33,68 @@ namespace WooComputer.Chips
      A cpu cannot have dynamic width because the logic of the processing is dependdent on how many bits are used in the system
      * so if its a 16 bit system then the logic in the Cycle method will be very dependent on that
      */
-    public class CPU16Bit
+    public partial class CPU16Bit
     {
         ALU alu = null;
         Register d = null;
         Register a = null;
         ProgramCounter pc = null;
+        CPUAnalyzer analyzer = null;
 
+        //these are things that are represnted by the output has to go back into the input of the next cycle
+        //well, how else can this happen unless you maintain state
+        bool[] aluOut = new bool[16];
 
-
-        public CPU16Bit()
+        public CPU16Bit(CPUAnalyzer analyzer)
         {
+            if (analyzer != null)
+                analyzer.cpu = this;
             alu = new ALU(16);
             d = new Register(16);
             pc = new ProgramCounter(16);
+            a = new Register(16);
+        }
+        public CPU16Bit()
+            : this(null)
+        {
+
         }
 
         /// <summary>
-        /// 
+        /// https://github.com/Sean-Der/nand2tetris/blob/master/05/CPU.hdl
         /// </summary>
         /// <param name="memory"></param>
         /// <param name="instruction"></param>
         /// <param name="reset"></param>
         /// <returns>Item1 = outM, Item2 = writeM, Item3 = addressM, Item4 = pc</returns>
-        public Tuple<bool[],bool,bool[],bool[]> Cycle(bool[] memory, bool[] instruction, bool reset) {
-
-            //the first bit of the instruction is what is used to determine if its an A instruction or a C instruction, I think this is what is used as the control bit for the MUX
-            var C1 = instruction[0];
-
-            //the lecture clearly explains that the other control bits come from the instruction starting at the 10th bit
-            var C2 = instruction[10];
-            var C3 = instruction[11];
-            var C4 = instruction[12];
-
-            //need a reference to the output of the CPU from the last cycle which right now is null, how do we get this??
-            //I am assuming C1 is correct but i'm not sure
-            var aRegisterInput = Gates.Mux(instruction, null, C1);
-
-
-            // i have no idea where the load bit comes from for the A register as the lecture did not specify, is it C1? maybe
-            var aRegisterOutput = a.Cycle(aRegisterInput, C2);
-
-            //i have no idea where the load bit for the D register comes from
-            //how do we get the output from the last cycle
-            var dRegisterOutput = d.Cycle(null, C3);
-
-            var aluInput1 = dRegisterOutput;
-
-            //i have no idea where the selector bit for the Mux comes from????
-            var aluInput2 = Gates.Mux(aRegisterOutput, memory, C4);
+        public Tuple<bool[], bool, bool[], bool[]> Cycle(bool[] memory, bool[] instruction, bool reset)
+        {
 
             
 
-            return null;
+            var allAluOut = alu.Cycle(dRegisterOut, amOut,
+                instruction[4],
+                instruction[5],
+                instruction[6],
+                instruction[7],
+                instruction[8],
+                instruction[9]
+                );
+            aluOut = allAluOut.Item1;
+
+
+
+            var pcOutput = pc.Cycle(aRegisterOut, pcLoad, pcInc, reset);
+
+
+
+            //how does [0..14] translate to what wee need ??
+            return new Tuple<bool[], bool, bool[], bool[]>(outM, writeM, addressM, pcOutput);
+
+
+
         }
+     
 
     }
 }

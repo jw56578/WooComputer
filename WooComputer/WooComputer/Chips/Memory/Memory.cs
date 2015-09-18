@@ -9,37 +9,46 @@ namespace WooComputer.Chips
     public class Memory
     {
         int width;
+        Ram16K ram;
         public Memory(int width)
         {
             this.width = width;
+            ram = new Ram16K(width);
         }
-
-        public void Cycle(bool[] input, bool load, bool[] address )
+        /// <summary>
+        /// https://github.com/jw56578/Nand2Tetris-1/blob/master/05/Memory.hdl
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="load"></param>
+        /// <param name="address">15 bits?</param>
+        public bool[] Cycle(bool[] input, bool load, bool[] address )
         {
+            //address[13..14], 
+            var dmuxOutput = Gates.DMux4Way(load, new bool[] { address[0], address[1] });
+            var orOutput = Gates.Or(dmuxOutput.Item1,dmuxOutput.Item2);
 
-            //not sure if subtracting 2 is specific to 16 bit. might need to adjusts
-            var dmuxout1 = Gates.DMux(load, address[address.Length -2]);
 
+            var ramOutput = ram.Cycle(input, orOutput, new bool[]{
+            address[1],
+            address[2],
+            address[3],
+            address[4],
+            address[5],
+            address[6],
+            address[7],
+            address[8],
+            address[9],
+            address[10],
+            address[11],
+            address[12],
+            address[13],
+            address[14],
+            });
 
+            var output = Gates.Mux4Way16(ramOutput, ramOutput, new bool[16], new bool[16], new bool[] { address[0], address[1] });
 
-        // Select between Ram and MM to send load bit
-        //DMux(in=load, sel=address[14], a=loadRam, b=loadMM);
+            return output;
 
-        //RAM16K(in=in, load=loadRam, address=address[0..13], out=outRam);
-
-        //// ----- Memory Map (MM) ----- //
-        //DMux(in=loadMM, sel=address[13], a=loadScreen, b=loadKeyboard);
-
-        //Screen(in=in, load=loadScreen, address=address[0..12], out=outScreen);
-        //Keyboard(out=outKeyboard);
-
-        //// Select between screen and keyboard for output
-        //Mux16(a=outScreen, b=outKeyboard, sel=address[13], out=outMM);
-        //// ----- End Memory Map ----- //
-
-        //// Select from RAM or MM for output
-        //Mux16(a=outRam, b=outMM, sel=address[14], out=out);
-        
         }
     }
 }

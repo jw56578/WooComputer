@@ -46,9 +46,12 @@
   <ItemGroup>
     <Compile Include="BinaryConverter.cs" />
     <Compile Include="Chips\ALU.cs" />
-    <Compile Include="Chips\CPU.cs" />
+    <Compile Include="Chips\CPU\CPU.cs" />
+    <Compile Include="Chips\CPU\CPU2.cs" />
+    <Compile Include="Chips\CPU\CPUAnalyzer.cs" />
     <Compile Include="Chips\Memory\Memory.cs" />
     <Compile Include="Chips\Memory\Ram16K.cs" />
+    <Compile Include="Chips\Memory\Ram32K.cs" />
     <Compile Include="Chips\Memory\Ram4K.cs" />
     <Compile Include="Chips\Memory\Ram512.cs" />
     <Compile Include="Chips\Operators.cs" />
