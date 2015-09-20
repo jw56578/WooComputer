@@ -18,5 +18,18 @@ namespace WooComputer
                          .ToArray(); // Convert IEnumerable from select to Array
             return bits;
         }
+        public static bool[] GetBitArrayFromString(string input)
+        {
+            List<bool> bits = new List<bool>();
+            foreach (var c in input.ToCharArray())
+            {
+                if (c == '0')
+                    bits.Add(false);
+                else
+                    bits.Add(true);
+            }
+            return bits.ToArray();
+
+        }
     }
 }

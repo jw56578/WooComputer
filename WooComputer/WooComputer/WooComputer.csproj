@@ -44,6 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembler\Analyzer.cs" />
+    <Compile Include="Assembler\Assembler.cs" />
+    <Compile Include="Assembler\ComputationTable.cs" />
+    <Compile Include="Assembler\DestinationTable.cs" />
+    <Compile Include="Assembler\JumpTable.cs" />
     <Compile Include="BinaryConverter.cs" />
     <Compile Include="Chips\ALU.cs" />
     <Compile Include="Chips\CPU\CPU.cs" />
