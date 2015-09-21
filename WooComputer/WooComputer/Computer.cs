@@ -8,67 +8,82 @@ using WooComputer.Chips;
 
 namespace WooComputer
 {
-    class Computer
+    public class Computer
     {
         static Computer CurrentComputer = null;
         ROM rom = null;
         CPU16Bit cpu;
         Memory memory;
-
-        //need to build the memory unit!!!!! where is that in the lecture
-
-
-        public static void ClockCycled() { 
-        
-            //how would you emulate the actual occurance of a cycle happening which takes the instruction from the ROM and puts that into the CPU
-            //need to study what the heck this thing is doing from the lecture
-            //none of the projects i cloned has the computer project done
-
-
-            //does the ROM depend on the program counter to determine which instruction to give??
-
-            var instructionAddress = 0;// this needs to come from the program counter which is in the CPU, so what is the techniqueu to get the value from the PC to the ROM
-            var instruction = CurrentComputer.rom.Cycle(0);
-
-
-
-            //var memory = CurrentComputer.memory.Cycle()
-           // CurrentComputer.cpu.Cycle(null, Functions.GetBitArrayFromInteger(0, 16), false);
-
-            
+        Tuple<bool[], bool, bool[], bool[]> output = null;
+        bool[] memoryValue = new bool[16];
+        bool[] instructionAddress = new bool[16];
+        Analyzer analyzer;
+        bool reset = false;
+        public void Reset() {
+            reset = true;
         }
-        public Computer(ClockCycle clockCycle, ROM rom ) {
+        public static void ClockCycled() {
+
+            var instruction = CurrentComputer.rom.Cycle(CurrentComputer.instructionAddress);
+
+            if (CurrentComputer.output != null)
+                CurrentComputer.memoryValue = CurrentComputer.memory.Cycle(CurrentComputer.output.Item1, CurrentComputer.output.Item2, CurrentComputer.output.Item3);
+            CurrentComputer.output = CurrentComputer.cpu.Cycle(CurrentComputer.memoryValue, instruction, CurrentComputer.reset);
+            CurrentComputer.reset = false;
+            CurrentComputer.instructionAddress = CurrentComputer.output.Item4;
+
+            if (CurrentComputer.analyzer != null)
+            {
+                CurrentComputer.analyzer.cycled(CurrentComputer.instructionAddress, CurrentComputer.output.Item1);
+            }
+        }
+        public Computer(ClockCycle clockCycle, ROM rom, CPU16Bit.CPUAnalyzer analyzer)
+        {
             CurrentComputer = this;
             this.rom = rom;
-            cpu = new CPU16Bit();
+            cpu = new CPU16Bit(analyzer);
             memory = new Memory(16);
             clockCycle.Start();
         }
         public Computer(ClockCycle clockCycle)
-            : this(clockCycle, new ROM(new List<bool[]>()))
+            : this(clockCycle, new ROM(new List<bool[]>()),null)
         {
 
         }
         public Computer(ROM instructions)
-            : this(new ClockCycle(Computer.ClockCycled, 1), instructions)
+            : this(new ClockCycle(Computer.ClockCycled, 1), instructions,null)
         {
 
         }
-        public Computer():this(new ClockCycle(Computer.ClockCycled,1), new ROM(new List<bool[]>()))
+        public Computer():this(new ClockCycle(Computer.ClockCycled,1), new ROM(new List<bool[]>()),null)
         { 
             
+        }
+        public Computer(int hertz,
+            List<bool[]> instructions,
+            CPU16Bit.CPUAnalyzer cpuAnalyzer,
+            Analyzer analyzer
+            
+            )
+            : this(new ClockCycle(Computer.ClockCycled, hertz), new ROM(instructions),cpuAnalyzer)
+        {
+            this.analyzer = analyzer;
+        
+        }
+
+        public class Analyzer
+        {
+            //this thing needs to be aware of the clocke cycle? should this also wrap the other analyzers?
+            //instruction address
+            //memory contents
+            public Action<bool[],bool[]> cycled;
+            public Analyzer(Action<bool[],bool[]> cycled){
+                this.cycled = cycled;
+            }
         }
     }
 }
 
-
-
-/* start with ROM that will be where the instructions come from, watch video on how instructions are formatted
- * Need a timer for the clock cycle 
- * Need a way to architect chips 
- * 
- * should all chips be linked together by observing. events will be registered by the chips that care about other chips output being changed
- */
 
 public class ClockCycle{
     Action cycled;

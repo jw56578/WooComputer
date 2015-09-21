@@ -47,7 +47,13 @@ namespace Tests
             return bits.ToArray();
         
         }
-
+        public static int GetIntegerFromBitArray(bool[] input)
+        {
+            var result = new int[1];
+            var binary = new BitArray(input.Reverse().ToArray());
+            binary.CopyTo(result, 0);
+            return result[0];
+        }
      
     }
 }

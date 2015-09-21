@@ -9,13 +9,18 @@ namespace WooComputer.Chips
     public class ROM
     {
         List<bool[]> instructions;
+        Ram16K memory = new Ram16K(16);
         public ROM(List<bool[]> instructions)
         {
-            this.instructions = instructions;
+            for (int i = 0; i < instructions.Count; i++) 
+            {
+                memory.Cycle(instructions[i],true,Functions.GetBitArrayFromInteger(i, 14));
+            }
+                
         }
-        public bool[] Cycle(int address)
+        public bool[] Cycle(bool[] address)
         {
-            return instructions[address];
+            return memory.Cycle(new bool[16], false, address);
         }
     }
 }

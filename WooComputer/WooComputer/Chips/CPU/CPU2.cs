@@ -119,9 +119,15 @@ namespace WooComputer.Chips
             //the logic is that you always increment by default and you need to account for other things
             //reset should override everything
             //load should override increment
-            var pcInc = Gates.NAnd(true, reset);
-            pcInc = Gates.NAnd(Load3, pcInc);
-            Load3 = Gates.Mux(Load3, false, reset);
+            //I cant think of how to do this logic with just gates
+            var pcInc = true;
+            if (Load3) {
+                pcInc = false;
+            }
+            if (reset) {
+                pcInc = Load3 = false;
+            }
+           
             var pcOutput = pc.Cycle(storedA, Load3, pcInc, reset);
 
             return new Tuple<bool[], bool, bool[], bool[]>(aluOut, writeM,

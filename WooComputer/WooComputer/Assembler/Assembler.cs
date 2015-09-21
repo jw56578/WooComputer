@@ -76,7 +76,14 @@ namespace WooComputer
                 return ParseAtSymbol(line);
             }
             //C instruction
-            else 
+            else if (line.Substring(0, 1) == "A"
+                || line.Substring(0, 1) == "M"
+                || line.Substring(0, 1) == "D"
+                || line.Substring(0, 1) == "MD"
+                || line.Substring(0, 1) == "AM"
+                || line.Substring(0, 1) == "AD"
+                || line.Substring(0, 1) == "AMD"
+                )
             {
                 return ParseCInstruction(line);
             }

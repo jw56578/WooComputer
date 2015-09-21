@@ -44,15 +44,22 @@ namespace Tests.Assembler
             WooComputer.Assembler a = new WooComputer.Assembler(16,
                 @"
                     
-
-
+                    A=0
+                    A=1
+                    A=-1
+                    D=0
+                    D=1
+                    D=-1
                     D=D+1
 
                 ");
 
             var output = a.GetOutput();
-            Assert.IsTrue(output.Count() == 1);
-            Functions.CompareBitArray(output[0], Functions.GetBitArrayFromString("1110011111010000"));
+            //Assert.IsTrue(output.Count() == 1);
+            Functions.CompareBitArray(output[0], Functions.GetBitArrayFromString("1110101010100000"));
+            Functions.CompareBitArray(output[1], Functions.GetBitArrayFromString("1110111111100000"));
+            Functions.CompareBitArray(output[2], Functions.GetBitArrayFromString("1110111010100000"));
+            Functions.CompareBitArray(output[6], Functions.GetBitArrayFromString("1110011111010000"));
 
         }
         [TestMethod]
@@ -62,7 +69,7 @@ namespace Tests.Assembler
             WooComputer.Assembler a = new WooComputer.Assembler(16,
                 @"
                     (GO)
-                        xxxxx
+                        D=D+1
                         whatever    
                         do stuff
 
@@ -116,6 +123,47 @@ namespace Tests.Assembler
             Assert.IsTrue(variables["variable1"] == 16);
             Assert.IsTrue(variables["variable2"] == 17);
             Assert.IsTrue(variables["variable3"] == 18);
+
+
+
+        }
+      
+        public void CanParseFullInstruction()
+        {
+            WooComputer.Assembler.AssemblerAnalyzer analyzer = new WooComputer.Assembler.AssemblerAnalyzer();
+            WooComputer.Assembler a = new WooComputer.Assembler(16,
+                @"
+                    (GO)
+                        @variable1
+                        @variable2  
+                        D=D+1
+
+
+                    (Stop)
+                        @variable3
+                        D=D+1
+
+
+
+
+                ", analyzer);
+
+            var output = a.GetOutput();
+            Assert.IsTrue(output.Count() == 3);
+            var variables = analyzer.GetVariableTable();
+            Assert.IsTrue(variables.Count() == 3);
+            Assert.IsTrue(variables.ContainsKey("variable1"));
+            Assert.IsTrue(variables.ContainsKey("variable2"));
+            Assert.IsTrue(variables.ContainsKey("variable3"));
+
+            Assert.IsTrue(variables["variable1"] == 16);
+            Assert.IsTrue(variables["variable2"] == 17);
+            Assert.IsTrue(variables["variable3"] == 18);
+
+            var labels = analyzer.GetLabelTable();
+            Assert.IsTrue(labels.Count() == 2);
+            Assert.IsTrue(labels.ContainsKey("GO"));
+            Assert.IsTrue(labels.ContainsKey("Stop"));
 
 
 

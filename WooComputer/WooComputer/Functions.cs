@@ -31,5 +31,21 @@ namespace WooComputer
             return bits.ToArray();
 
         }
+        public static string GetStringFromBitArray(bool[] input)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var c in input)
+            {
+                sb.Append(c.ToString());
+            }
+            return sb.ToString();
+
+        }
+        public static int GetIntegerFromBitArray(bool[] input) {
+            var result = new int[1];
+            var binary = new BitArray(input.Reverse().ToArray());
+            binary.CopyTo(result, 0);
+            return result[0];
+        }
     }
 }
